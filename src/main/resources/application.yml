@@ -1,0 +1,5 @@
+aws:
+    s3user:
+        accesskey:
+        secretkey:
+        
