@@ -17,7 +17,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
-import io.joergi.testcontainers.services.UploadService;
+import io.joergi.testcontainers.services.UploadServiceAws;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,7 +37,7 @@ class UploadServiceTest {
                 .withEndpointConfiguration(localstack.getEndpointConfiguration(Service.S3))
                 .withCredentials(localstack.getDefaultCredentialsProvider())
                 .build();
-       s3.createBucket(UploadService.S3_BUCKET);
+       s3.createBucket(UploadServiceAws.S3_BUCKET);
     }
 
     @Test
@@ -51,7 +51,7 @@ class UploadServiceTest {
                 
         log.info("filesize {}", file.length());
     
-        UploadService uploadService = new UploadService(s3);
+        UploadServiceAws uploadService = new UploadServiceAws(s3);
         
         assertEquals("1H+unZ3mMYHFDS8MZmI4MA==", 
                 uploadService

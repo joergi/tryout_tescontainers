@@ -14,25 +14,25 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class UploadService {
+public class UploadServiceAws {
 
     public static final String S3_BUCKET = "io.joergi.testbucket";
 
     private AmazonS3 s3Client;
     
-    public UploadService(AmazonS3 amazonS3) {
+    public UploadServiceAws(AmazonS3 amazonS3) {
         this.s3Client = amazonS3;
     }
     
     public String uploadFile(File file) throws FileNotFoundException, IOException {
 
-        String filename = "test" + new Random().nextLong();
+        String filename = "test-" + new Random().nextLong() + ".jpg";
         
         PutObjectResult result = s3Client.putObject(S3_BUCKET, filename, file);
         
         //TODO compare md5 checksum
         log.info("hash of uploaded file {}", result.getContentMd5());;
-//        deleteFile(filename);
+        deleteFile(filename);
         return result.getContentMd5();
     }
 
